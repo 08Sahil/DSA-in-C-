@@ -9,7 +9,7 @@ void TopologicalSort(int node, unordered_map<int, list<int>>&Adj, unordered_map<
     Visited[node] = true;
 
     for(auto neighbour : Adj[node]){
-        if(!Visited[node]){
+        if(!Visited[neighbour]){
             TopologicalSort(neighbour, Adj, Visited, st);
         }
     }
@@ -41,8 +41,8 @@ vector<int> TopologicalSort(int m, int n, vector<vector<int>>&edges ){
 
 int main(){
     // Create edges vector for topology sort
-    vector<vector<int>> edges = {{0,1}, {0,4}, {1,2}, {1,3}, {1,4}, {2,3}};
-    vector<int> HasTopologySort = TopologicalSort( 6, 5, edges);
+    vector<vector<int>> edges = {{0,1}, {0,3}, {1,2}, {3,2}};
+    vector<int> HasTopologySort = TopologicalSort( 4, 3, edges);
     for(int i = 0; i<HasTopologySort.size(); i++){
         cout<< HasTopologySort[i]<<" ";
     }    
