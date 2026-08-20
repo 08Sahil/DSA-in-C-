@@ -6,7 +6,7 @@
 
 using namespace std;
 
-vector<int> TopologicalSort(vector<vector<int>>&edges, int V, int E){
+bool CycleDetectionBFSTopologicalSort(vector<vector<int>>&edges, int V, int E){
     //Create ADjacency Matrix
     unordered_map<int, list<int>>Adj;
     for(int i = 0; i< E; i++){
@@ -18,11 +18,12 @@ vector<int> TopologicalSort(vector<vector<int>>&edges, int V, int E){
     //Find all indegree 
     vector<int>Indegree(V);
     for(auto i:Adj){
-        cout << "The Adj Value for incresing the indegree "<< i.first<<endl;
+        // cout << "The Adj Value for incresing the indegree "<< i.first;
         for(auto j : i.second){
             Indegree[j]++;
-            cout<<"Printing the value of J "<<j <<" ";
+            // cout<<" >> "<<j;
         }
+        // cout<<endl;
     }
     //Push all the zero Indegree
     queue<int>q;
@@ -32,25 +33,30 @@ vector<int> TopologicalSort(vector<vector<int>>&edges, int V, int E){
         }
     }
     //Do BFS
-    vector<int> ans;
+    int cnt = 0;
     while (!q.empty())
     {
         int front = q.front();
         q.pop();
-        ans.push_back(front);
+        cout<< "The front value is " <<front <<endl;
+        cnt++;
+        cout<<"The counter value is "<< cnt <<endl;
          
         //neighbour indegree update
         for(auto neighbour : Adj[front]){
+            // cout<<neighbour <<" ";
             Indegree[neighbour]--;
             if(Indegree[neighbour] == 0){
                 q.push(neighbour);
             }
         }
-        
-
-
     }
-    return ans;
+    if(cnt == V){
+        return false;
+    }
+    else{
+        return true;
+    }
     
 }
 
@@ -61,8 +67,7 @@ vector<vector<int>> edges{
     {1,4},
     {2,4},
     {4,3}
-};    vector<int > TopologicalAnswer = TopologicalSort(edges, 5, 5);
-    for(int i = 0; i<5; i++){
-    cout << TopologicalAnswer[i] << " ";
-}
+};    
+bool Answer = CycleDetectionBFSTopologicalSort(edges, 5, 5);
+cout <<"Is it the cycle or not "<< Answer<<endl; 
 }
