@@ -18,10 +18,10 @@ vector<int> TopologicalSort(vector<vector<int>>&edges, int V, int E){
     //Find all indegree 
     vector<int>Indegree(V);
     for(auto i:Adj){
-        cout << "The Adj Value for incresing the indegree "<< i.first<<endl;
+        // cout << "The Adj Value for incresing the indegree "<< i.first<<endl;
         for(auto j : i.second){
             Indegree[j]++;
-            cout<<"Printing the value of J "<<j <<" ";
+            // cout<<"Printing the value of J "<<j <<" ";
         }
     }
     //Push all the zero Indegree
