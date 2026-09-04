@@ -55,7 +55,6 @@ int main() {
     int V = 5; // Number of vertices
     int E = 6; // Number of edges
     Graph g(V, E);
-
     g.addEdge(0, 1);
     g.addEdge(0, 4);
     g.addEdge(1, 2);
