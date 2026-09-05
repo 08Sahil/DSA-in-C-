@@ -23,6 +23,30 @@ class Graph{
                 }
             }
         }
+        void dfs(int nodes, unordered_map<int, bool> & visited, stack<int> &st){
+            visited[nodes] = true;
+
+            for(auto neighbour : Adj[nodes]){
+                if(!visited[neighbour.first]){
+                    dfs(neighbour.first, visited, st);
+                }
+            }
+            st.push(nodes);
+        }
+        void getShortestPath(int nodes, stack<int> &st, vector<int> &Dist){
+            Dist[nodes] = 0; 
+            while(!st.empty()){
+                int Top = st.top();
+                st.pop();
+                if(Dist[Top] != INT_MAX){
+                    for(auto i: Adj[Top]){
+                        if(Dist[Top] + i.second < Dist[i.first] ){
+                            Dist[i.first] = Dist[Top] + i.second;
+                        }
+                    }
+                }
+            }
+        }
     };
 
 int main(){
@@ -38,5 +62,25 @@ int main(){
         g.addEdge(4,5,-2);
         
         g.PrintAdj();
+
+        //Topological Short 
+        unordered_map<int, bool> visited;
+        stack<int>st;
+        int n = 6;// number of vertices
+        for(int i = 0; i< n; i++){
+            if(!visited[i]){
+                g.dfs(i, visited, st);
+            }
+        }
+        int Src = 1;
+        vector<int> AnsShortestPath(n);
+        for(int i = 0; i< n; i++){
+            AnsShortestPath[i] = INT_MAX;
+        }
+        cout<<"Answer is "<<endl;
+        g.getShortestPath(Src, st, AnsShortestPath);
+        for(int i = 0; i< AnsShortestPath.size() ; i++){
+            cout << AnsShortestPath[i] <<" ";
+        }cout<<endl;
         return 0;
 }
